@@ -1,0 +1,35 @@
+# MaterCare Homes - Python Dependencies
+# =====================================
+
+# Core
+fastapi>=0.109.0
+uvicorn>=0.27.0
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+
+# ML/AI
+huggingface-hub>=0.20.0
+transformers>=4.40.0
+torch>=2.0.0
+peft>=0.10.0
+trl>=0.8.0
+
+# RAG / Knowledge Base
+langchain>=0.2.0
+langchain-community>=0.2.0
+langchain-huggingface>=0.1.0
+chromadb>=0.4.0
+sentence-transformers>=2.5.0
+
+# MCP Server
+httpx>=0.26.0
+
+# Utilities
+python-multipart>=0.0.6
+aiofiles>=23.2.1
+requests>=2.31.0
+
+# Testing
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-cov>=4.1.0

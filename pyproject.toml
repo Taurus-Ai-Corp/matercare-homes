@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "matercare-homes"
+version = "1.0.0"
+description = "AI-powered eldercare platform with passive IoT monitoring, RAG knowledge base, and MCP integration"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "TAURUS AI Corp", email = "info@taurusai.io"}
+]
+keywords = ["eldercare", "ai", "healthcare", "iot", "sensor", "fall-detection", "rag", "llm"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn>=0.27.0",
+    "python-dotenv>=1.0.0",
+    "pydantic>=2.5.0",
+    "huggingface-hub>=0.20.0",
+    "httpx>=0.26.0",
+]
+
+[project.optional-dependencies]
+ml = [
+    "transformers>=4.40.0",
+    "torch>=2.0.0",
+    "peft>=0.10.0",
+    "trl>=0.8.0",
+]
+rag = [
+    "langchain>=0.2.0",
+    "langchain-community>=0.2.0",
+    "langchain-huggingface>=0.1.0",
+    "chromadb>=0.4.0",
+    "sentence-transformers>=2.5.0",
+]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+]
+all = [
+    "matercare-homes[ml,rag,dev]",
+]
+
+[project.urls]
+Homepage = "https://github.com/Taurus-AI-Corp/matercare-homes"
+Documentation = "https://github.com/Taurus-AI-Corp/matercare-homes#readme"
+Repository = "https://github.com/Taurus-AI-Corp/matercare-homes"
+Issues = "https://github.com/Taurus-AI-Corp/matercare-homes/issues"
+
+[project.scripts]
+matercare-api = "matercare.src.api:main"
+matercare-mcp = "matercare.src.mcp:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["matercare*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"

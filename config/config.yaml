@@ -1,0 +1,57 @@
+# MaterCare Homes - Configuration
+# ===============================
+
+# Model Configuration
+model:
+  path: "Taurus-AI-Corp/matercare-llama-3.2-3b"
+  temperature: 0.7
+  max_tokens: 512
+
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins:
+    - "*"
+
+# MCP Server Configuration
+mcp:
+  host: "0.0.0.0"
+  port: 9000
+
+# Sensor Configuration
+sensors:
+  default_timeout: 3600  # seconds
+  alert_cooldown: 300  # seconds
+  sensors:
+    - id: "mmwave_01"
+      type: "mmwave"
+      enabled: true
+    - id: "motion_01"
+      type: "pir"
+      enabled: true
+    - id: "door_01"
+      type: "door"
+      enabled: true
+
+# Alert Configuration
+alerts:
+  twilio:
+    enabled: false
+    account_sid: "${TWILIO_ACCOUNT_SID}"
+    auth_token: "${TWILIO_AUTH_TOKEN}"
+    from_number: "${TWILIO_PHONE_NUMBER}"
+  recipients:
+    - "${ALERT_PHONE_NUMBER}"
+
+# RAG Configuration
+rag:
+  persist_directory: "./chroma_db"
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+  chunk_size: 500
+  chunk_overlap: 50
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
