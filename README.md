@@ -195,6 +195,125 @@ kb.add_source(KnowledgeSource(
 ))
 ```
 
+## 6-Phase Care Loop Orchestrator
+
+MaterCare features a **novel 6-phase orchestration** that no competitor has:
+
+### Phase 1: SENSE - Collect all data sources
+- IoT sensor data (mmWave, PIR, door)
+- Voice input
+- Documents/prescriptions
+- Historical care data
+
+### Phase 2: THINK - Multi-agent analysis
+- **TriageAgent**: Overall condition assessment
+- **MedicationAgent**: Drug interactions & adherence
+- **VitalAgent**: Heart rate, breathing, temperature
+- **CognitiveAgent**: Mental status evaluation
+- **ActivityAgent**: Daily patterns
+- **SocialAgent**: Engagement monitoring
+- **EmergencyAgent**: Critical condition detection
+- **NutritionAgent**: Dietary needs
+
+### Phase 3: PLAN - Generate care recommendations
+Synthesize all agent analyses into actionable recommendations.
+
+### Phase 4: ACT - Execute actions
+- Send alerts
+- Update care plans
+- Trigger interventions
+
+### Phase 5: LEARN - Feedback loop
+Learn from outcomes to improve future recommendations.
+
+### Phase 6: REPORT - Notify stakeholders
+- Family members
+- Caregivers
+- Healthcare providers
+
+### Using the Orchestrator
+
+```python
+from matercare.src.orchestration import MaterCareOrchestrator
+from matercare.src.orchestration.agents import get_care_agent
+
+# Create orchestrator
+orchestrator = MaterCareOrchestrator()
+
+# Register care agents
+orchestrator.register_agent("triage_agent", get_care_agent("triage"))
+orchestrator.register_agent("medication_agent", get_care_agent("medication"))
+orchestrator.register_agent("emergency_agent", get_care_agent("emergency"))
+orchestrator.register_agent("vital_agent", get_care_agent("vital"))
+orchestrator.register_agent("cognitive_agent", get_care_agent("cognitive"))
+
+# Execute care loop
+result = await orchestrator.care_loop("senior_123", {
+    "sensors": {
+        "motion": True,
+        "fall": False,
+        "heart_rate": 72,
+        "temperature": 36.5
+    },
+    "voice": "I'm feeling tired today"
+})
+
+print(f"Priority: {result.priority}")
+print(f"Recommendation: {result.recommendation}")
+print(f"Actions: {result.actions}")
+```
+
+### MCP Server for External Agents
+
+The MCP server exposes MaterCare to external AI agents:
+
+```bash
+# Run MCP server
+python -m matercare.src.orchestration.mcp_server
+
+# Or run directly
+python matercare/src/orchestration/mcp_server.py
+```
+
+Available tools:
+- `care_loop` - Execute full 6-phase care loop
+- `assess_senior` - Get comprehensive assessment
+- `check_emergency` - Check for emergencies
+- `review_medications` - Review drugs for interactions
+- `register_senior` - Register new senior
+- `notify_family` - Send family notifications
+- `get_knowledge` - Query knowledge base
+- `get_care_history` - Get historical data
+
+### Connect to TAURUS Platform MCPs
+
+```python
+from matercare.src.orchestration.integrations import create_connector
+
+# Create connector to TAURUS MCPs
+connector = await create_connector()
+
+# Use MCP bridge for eldercare-specific operations
+bridge = MaterCareMCPBridge(connector)
+
+# Notify family via email, SMS, WhatsApp, Slack
+await bridge.notify_family(
+    senior_name="John Smith",
+    message="Fall detected - please check in",
+    priority="urgent",
+    channels=["email", "sms", "whatsapp"]
+)
+
+# Schedule caregiver visit
+from datetime import datetime
+await bridge.schedule_caregiver_visit(
+    senior_name="John Smith",
+    caregiver_name="Mary",
+    scheduled_time=datetime(2026, 2, 28, 10, 0),
+    notes="Regular wellness check"
+)
+```
+
 ## Hardware Setup
 
 ### Recommended Sensors
