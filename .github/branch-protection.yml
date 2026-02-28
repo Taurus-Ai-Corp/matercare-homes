@@ -1,0 +1,24 @@
+# GitHub branch protection rules
+default_branch_protection: 1
+
+# Require pull request reviews
+required_pull_request_reviews:
+  dismissal_restrictions:
+    users: []
+    teams: []
+  dismiss_stale_reviews: true
+  require_code_owner_reviews: true
+  required_reviewing_team_count: 1
+
+# Require status checks
+required_status_checks:
+  strict: true
+  checks:
+    - context: "ci/lint"
+    - context: "ci/test"
+
+# Require conversation resolution
+require_conversation_resolution: true
+
+# Include administrators
+include_administrators: true

@@ -1,0 +1,17 @@
+# GitHub Environments
+staging:
+  protection_rules:
+    - type: required_reviewers
+      reviewers:
+        - taurus-ai-core
+    - type: wait_timer
+      minutes: 30
+      
+production:
+  protection_rules:
+    - type: required_reviewers
+      reviewers:
+        - taurus-ai-core
+      - type: wait_timer
+      minutes: 60
+  deployment_branch_policy: protected

@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install ruff black mypy pytest
+          
+      - name: Run Ruff linter
+        run: ruff check .
+        
+      - name: Run Black formatter
+        run: black --check .
+        
+      - name: Run MyPy type check
+        run: mypy src/ --ignore-missing-imports
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Install dependencies
+        run: |
+          pip install -e ".[all]"
+          pip install pytest pytest-asyncio pytest-cov
+          
+      - name: Run tests
+        run: |
+          pytest --cov=src --cov-report=xml --cov-report=term
+        env:
+          HUGGINGFACE_API_TOKEN: dummy
+          
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Bandit security scan
+        uses: lykken55/bandit-action@main
+        
+      - name: Run Safety check
+        uses: pyupio/safety-action@main
+        with:
+          requirements: requirements.txt
+
+  build-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          registry-url: 'https://upload.pypi.org/old/'
+          
+      - name: Build package
+        run: |
+          pip install build
+          python -m build
+          
+      - name: Check package
+        run: |
+          pip install twine
+          twine check dist/*

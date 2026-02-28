@@ -14,6 +14,15 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
   </a>
+  <a href="https://github.com/Taurus-AI-Corp/matercare-homes/actions">
+    <img src="https://github.com/Taurus-AI-Corp/matercare-homes/workflows/CI/badge.svg" alt="CI">
+  </a>
+  <a href="https://github.com/Taurus-AI-Corp/matercare-homes/security">
+    <img src="https://img.shields.io/badge/Security-HIPAA%20Ready-blue" alt="Security">
+  </a>
+  <a href="https://pypi.org/project/matercare-homes/">
+    <img src="https://img.shields.io/badge/Enterprise-White--Label-blue" alt="Enterprise">
+  </a>
 </p>
 
 > **The "Grandma Test" passed** - No smartphone required. Passive monitoring for elderly that informs caregivers.

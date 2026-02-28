@@ -1,0 +1,63 @@
+name: Security Scan
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly
+  push:
+    branches: [main, master]
+
+jobs:
+  dependency-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run pip-audit
+        uses: pypa/pip-audit-action@v1
+        with:
+          requirements: requirements.txt
+          
+      - name: Check for secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          repository: ${{ github.repository }}
+          base: ${{ github.event.repository.default_branch }}
+          head: ${{ github.ref_name }}
+
+  codeql:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python
+          
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:python"
+
+  container-scan:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build Docker image
+        run: docker build -t matercare:test .
+        
+      - name: Run Trivy scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'matercare:test'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          
+      - name: Upload results to Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
