@@ -3,15 +3,15 @@ requires = ["setuptools>=65.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "matercare-homes"
+name = "eldcare-ai-platform"
 version = "1.0.0"
-description = "AI-powered eldercare platform with passive IoT monitoring, RAG knowledge base, and MCP integration"
+description = "AI-powered eldercare platform with passive IoT monitoring, 6-phase care loop orchestration, and MCP integration"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
     {name = "TAURUS AI Corp", email = "info@taurusai.io"}
 ]
-keywords = ["eldercare", "ai", "healthcare", "iot", "sensor", "fall-detection", "rag", "llm"]
+keywords = ["eldercare", "ai", "healthcare", "iot", "sensor", "fall-detection", "rag", "llm", "care-loop"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -53,22 +53,24 @@ dev = [
     "pytest-cov>=4.1.0",
 ]
 all = [
-    "matercare-homes[ml,rag,dev]",
+    "eldcare-ai-platform[ml,rag,dev]",
 ]
 
 [project.urls]
-Homepage = "https://github.com/Taurus-AI-Corp/matercare-homes"
-Documentation = "https://github.com/Taurus-AI-Corp/matercare-homes#readme"
-Repository = "https://github.com/Taurus-AI-Corp/matercare-homes"
-Issues = "https://github.com/Taurus-AI-Corp/matercare-homes/issues"
+Homepage = "https://github.com/Taurus-AI-Corp/eldcare-ai-platform"
+Documentation = "https://github.com/Taurus-AI-Corp/eldcare-ai-platform#readme"
+Repository = "https://github.com/Taurus-AI-Corp/eldcare-ai-platform"
+Issues = "https://github.com/Taurus-AI-Corp/eldcare-ai-platform/issues"
 
 [project.scripts]
-matercare-api = "matercare.src.api:main"
-matercare-mcp = "matercare.src.mcp:main"
+eldcare-cli = "eldcare_cli.main:main"
+eldcare-api = "eldcare_cli.api_server:main"
+eldcare-mcp = "eldcare_cli.mcp_server:main"
+eldcare-orchestrator = "eldcare_cli.orchestrator:run"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["matercare*"]
+include = ["eldcare*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

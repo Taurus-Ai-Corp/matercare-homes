@@ -1,0 +1,5 @@
+# Copy to terraform.tfvars and fill in real values (never commit terraform.tfvars)
+
+cloudflare_api_token   = "your-cloudflare-api-token-here"
+cloudflare_account_id  = "your-cloudflare-account-id-here"
+google_dkim_public_key = "MIIBIjANBgkq..."  # from Google Workspace Admin

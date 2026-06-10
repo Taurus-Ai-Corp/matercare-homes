@@ -1,37 +1,34 @@
-# MaterCare Homes
+# Eldercare AI Platform
 
 <p align="center">
-  <img src="assets/logo.png" alt="MaterCare Homes" width="200"/>
+  <img src="assets/logo.png" alt="Eldercare AI Platform" width="200"/>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Taurus-AI-Corp/matercare-homes">
-    <img src="https://img.shields.io/badge/GitHub-MaterCare-red" alt="GitHub">
+  <a href="https://github.com/Taurus-AI-Corp/eldcare-ai-platform">
+    <img src="https://img.shields.io/badge/GitHub-Eldercare-red" alt="GitHub">
   </a>
-  <a href="https://pypi.org/project/matercare-homes/">
+  <a href="https://pypi.org/project/eldcare-ai-platform/">
     <img src="https://img.shields.io/badge/PyPI-v1.0.0-blue" alt="PyPI">
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
   </a>
-  <a href="https://github.com/Taurus-AI-Corp/matercare-homes/actions">
-    <img src="https://github.com/Taurus-AI-Corp/matercare-homes/workflows/CI/badge.svg" alt="CI">
+  <a href="https://github.com/Taurus-AI-Corp/eldcare-ai-platform/actions">
+    <img src="https://github.com/Taurus-AI-Corp/eldcare-ai-platform/workflows/CI/badge.svg" alt="CI">
   </a>
-  <a href="https://github.com/Taurus-AI-Corp/matercare-homes/security">
+  <a href="https://github.com/Taurus-AI-Corp/eldcare-ai-platform/security">
     <img src="https://img.shields.io/badge/Security-HIPAA%20Ready-blue" alt="Security">
-  </a>
-  <a href="https://pypi.org/project/matercare-homes/">
-    <img src="https://img.shields.io/badge/Enterprise-White--Label-blue" alt="Enterprise">
   </a>
 </p>
 
 > **The "Grandma Test" passed** - No smartphone required. Passive monitoring for elderly that informs caregivers.
 
-## What is MaterCare Homes?
+## What is Eldercare AI Platform?
 
-MaterCare Homes is an **AI-powered eldercare platform** designed for the 80% of seniors who don't use smartphones. It combines:
+Eldercare AI Platform is an **AI-powered eldercare platform** designed for the 80% of seniors who don't use smartphones. It combines:
 
-- 🤖 **Agentic AI** - Autonomous decision-making for eldercare
+- 🤖 **Agentic AI** - Autonomous decision-making via 6-phase Care Loop
 - 📄 **OCR** - Scan prescriptions, medical documents  
 - 📚 **RAG** - Healthcare knowledge retrieval
 - 📡 **IoT Sensors** - Passive monitoring (mmWave, PIR, door sensors)
@@ -39,8 +36,8 @@ MaterCare Homes is an **AI-powered eldercare platform** designed for the 80% of 
 
 ### The Problem We Solve
 
-| Traditional Eldercare Tech | MaterCare |
-|---------------------------|-----------|
+| Traditional Eldercare Tech | Eldercare AI |
+|---------------------------|--------------|
 | Senior needs smartphone | Senior does NOTHING |
 | Wearable required | Passive sensors |
 | App complexity | Caregiver uses app |
@@ -81,13 +78,44 @@ MaterCare Homes is an **AI-powered eldercare platform** designed for the 80% of 
 ### Installation
 
 ```bash
-pip install matercare-homes
+pip install eldcare-ai-platform
+```
+
+### CLI Usage
+
+```bash
+# Show version
+eldcare-cli version
+
+# Start API server
+eldcare-cli api --port 8000
+
+# Start MCP server
+eldcare-cli mcp --port 9000
+
+# Run care loop orchestrator
+eldcare-cli orchestrator --senior-id "john_doe" --heart-rate 72
+
+# Chat with AI
+eldcare-cli chat "What are fall prevention tips?"
+
+# Generate care plan
+eldcare-cli care-plan --patient "John" --conditions diabetes,hypertension
+
+# Query knowledge base
+eldcare-cli knowledge "fall prevention" --k 5
+
+# Check sensor status
+eldcare-cli sensors status --senior-id "john_doe"
 ```
 
 ### Python Usage
 
 ```python
-from matercare import MaterCareLLM, SensorGateway, KnowledgeBase
+from eldcare_cli import run_orchestrator
+from eldcare_src.model import MaterCareLLM
+from eldcare_src.sensors import SensorGateway
+from eldcare_src.rag import KnowledgeBase
 
 # Chat with eldercare AI
 llm = MaterCareLLM()
@@ -97,7 +125,6 @@ print(response)
 # Set up sensors
 gateway = SensorGateway("senior_01")
 gateway.register_sensor("mmwave_01", "mmwave")
-gateway.register_sensor("door_01", "door")
 
 # Query knowledge base
 kb = KnowledgeBase()
@@ -107,22 +134,19 @@ results = kb.retrieve("fall prevention")
 ### API Server
 
 ```bash
-# Run API
-matercare-api
+# Run API (new way)
+eldcare-cli api --port 8000
 
-# Or programmatically
-from matercare.src.api import app
-import uvicorn
-uvicorn.run(app, port=8000)
+# Or programmatic
+from eldcare_cli.api_server import main
+main()
 ```
 
 ### MCP Server (For AI Agents)
 
 ```bash
-# Run MCP server
-matercare-mcp
-
-# Now connect Claude Code, Cursor, etc.
+# Run MCP server (new way)
+eldcare-cli mcp --port 9000
 ```
 
 ## Architecture
